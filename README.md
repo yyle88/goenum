@@ -5,9 +5,9 @@
 [![GitHub Release](https://img.shields.io/github/release/yyle88/goenum.svg)](https://github.com/yyle88/goenum/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/goenum)](https://goreportcard.com/report/github.com/yyle88/goenum)
 
-# goenum
+# GOENUM
 
-Go enumeration generation and management toolkit with type safety and flexible naming patterns.
+Go enum code generation that enables different business domains to share common enum names like OK, ERROR, PENDING without naming conflicts through namespace isolation.
 
 ---
 
@@ -17,13 +17,13 @@ Go enumeration generation and management toolkit with type safety and flexible n
 [中文说明](README.zh.md)
 <!-- TEMPLATE (EN) END: LANGUAGE NAVIGATION -->
 
-## Key Features
+## Features
 
-🎯 **Smart Enum Generation**: Auto generates type-safe enum code with customizable naming patterns  
-⚡ **Multiple Naming Modes**: Supports prefix, suffix, middle, and single naming strategies  
-🔄 **Type Safety**: Compile-time enum validation with generic constraints  
-🌍 **Flexible Types**: Works with any comparable type (int, string, custom types)  
-📋 **Validation Functions**: Auto-generates Valid() and Check() methods for runtime validation
+🔒 **Namespace Isolation** - Each domain has its own enum space, preventing naming conflicts
+⚡ **Type Validation** - Auto-generated validation methods ensure value correctness
+🎯 **Clean Code** - Intuitive syntax that matches business logic patterns
+✅ **Compile Protection** - Catch enum misuse at build time, not runtime
+🌍 **Multi-Language** - Generate enums using any language characters
 
 ## Installation
 
@@ -31,236 +31,163 @@ Go enumeration generation and management toolkit with type safety and flexible n
 go get github.com/yyle88/goenum
 ```
 
-## Quick Start
+## Usage
 
-### 1. Define Your Enum Configuration
+Go lacks true enum namespaces. Different domains can't share common value names like `OK`, `ERROR`, `PENDING`.
+
+### Before: Verbose Prefixes Required
 
 ```go
-package main
-
-import (
-    "github.com/yyle88/goenum/goenumgen"
+type PackageStatus string
+const (
+    PackagePending   PackageStatus = "PENDING"
+    PackageConfirmed PackageStatus = "CONFIRMED"
+    PackageShipped   PackageStatus = "SHIPPED"
+    PackageDelivered PackageStatus = "DELIVERED"
 )
 
-func main() {
-    // Configure enum generation
-    config := &goenumgen.Config[string]{
-        Type:       "StatusEnum",
-        Name:       "Status", 
-        BasicValue: "Status",
-        DelimValue: "-",
-        NamingMode: goenumgen.NamingMode.Suffix(), // "Status-OK", "Status-Error"
-        IsGenValid: true,
-        IsGenCheck: true,
-        Options: []*goenumgen.EnumOption[string]{
-            {Name: "OK", OptionValue: "OK"},
-            {Name: "Error", OptionValue: "Error"}, 
-            {Name: "Pending", OptionValue: "Pending"},
-        },
-    }
-    
-    // Generate enum code
-    goenumgen.Generate(config, "internal/enums/status.go")
-}
-```
-
-### 2. Generated Enum Code
-
-The above configuration generates:
-
-```go
-package enums
-
-import "slices"
-
-type StatusEnum string
-
-const Status = StatusEnum("Status")
-
-func (StatusEnum) OK() StatusEnum {
-    return "Status" + "-" + "OK"
-}
-
-func (StatusEnum) Error() StatusEnum {
-    return "Status" + "-" + "Error"
-}
-
-func (StatusEnum) Pending() StatusEnum {
-    return "Status" + "-" + "Pending"
-}
-
-func (StatusEnum) Enums() []StatusEnum {
-    return []StatusEnum{
-        Status.OK(),
-        Status.Error(), 
-        Status.Pending(),
-    }
-}
-
-func (value StatusEnum) Valid() bool {
-    return slices.Contains(Status.Enums(), value)
-}
-
-func (value StatusEnum) Check() bool {
-    return value == Status || slices.Contains(Status.Enums(), value)
-}
-```
-
-### 3. Use Your Enums
-
-```go
-package main
-
-import (
-    "fmt"
-    "your-project/internal/enums"
-    "github.com/yyle88/goenum"
+type PaymentStatus string
+const (
+    PaymentPending PaymentStatus = "PENDING"
+    PaymentFailed  PaymentStatus = "FAILED"
+    PaymentSuccess PaymentStatus = "SUCCESS"
+    PaymentRefund  PaymentStatus = "REFUND"
 )
+```
 
-func main() {
-    // Create enum values
-    status := enums.Status.OK()
-    fmt.Println(status) // Output: Status-OK
-    
-    // Validate enum values
-    if goenum.Valid(status) {
-        fmt.Println("Valid enum value")
-    }
-    
-    // Check with basic value support
-    if goenum.Check(enums.Status) {
-        fmt.Println("Basic value is valid")
-    }
-    
-    // Get all enum values
-    allStatuses := enums.Status.Enums()
-    for _, s := range allStatuses {
-        fmt.Printf("Status: %s, Valid: %t\n", s, s.Valid())
+```go
+// Verbose switch statements with long prefixes
+func processPackage(status string) {
+    switch PackageStatus(status) {
+    case PackagePending:
+        // handle pending
+    case PackageConfirmed:
+        // handle confirmed
+    case PackageShipped:
+        // handle shipped
+    case PackageDelivered:
+        // handle delivered
     }
 }
 ```
 
-## Naming Modes
-
-### Prefix Mode
-Pattern: `option + delimiter + basic`
 ```go
-NamingMode: goenumgen.NamingMode.Prefix()
-// Result: "OK-Status", "Error-Status"
-```
-
-### Suffix Mode  
-Pattern: `basic + delimiter + option`
-```go
-NamingMode: goenumgen.NamingMode.Suffix()
-// Result: "Status-OK", "Status-Error"
-```
-
-### Middle Mode
-Pattern: `basic + option + delimiter`
-```go
-NamingMode: goenumgen.NamingMode.Middle()
-// Result: "StatusOK-", "StatusError-"
-```
-
-### Single Mode
-Pattern: `option`
-```go
-NamingMode: goenumgen.NamingMode.Single()
-// Result: "OK", "Error"
-```
-
-## Advanced Examples
-
-### HTTP Status Codes
-
-```go
-config := &goenumgen.Config[int]{
-    Type:       "HTTPStatusEnum",
-    Name:       "HTTPStatus",
-    BasicValue: 0,
-    DelimValue: 0, // Not used for integers
-    NamingMode: goenumgen.NamingMode.Single(),
-    IsGenValid: true,
-    IsGenCheck: true,
-    Options: []*goenumgen.EnumOption[int]{
-        {Name: "OK", OptionValue: 200},
-        {Name: "NotFound", OptionValue: 404},
-        {Name: "InternalError", OptionValue: 500},
-    },
+func processPayment(status string) {
+    switch PaymentStatus(status) {
+    case PaymentPending:
+        // handle pending
+    case PaymentFailed:
+        // handle failed
+    case PaymentSuccess:
+        // handle success
+    case PaymentRefund:
+        // handle refund
+    }
 }
 ```
 
-### Database Connection States
+### With GOENUM: Clean Namespace Methods
 
 ```go
-config := &goenumgen.Config[string]{
-    Type:       "ConnStateEnum", 
-    Name:       "ConnState",
-    BasicValue: "conn",
-    DelimValue: ".",
-    NamingMode: goenumgen.NamingMode.Prefix(),
-    IsGenBasic: true,
-    IsGenValid: true,
-    Options: []*goenumgen.EnumOption[string]{
-        {Name: "Connected", OptionValue: "active"},
-        {Name: "Disconnected", OptionValue: "inactive"},
-        {Name: "Connecting", OptionValue: "pending"},
-    },
-}
-// Generates: "active.conn", "inactive.conn", "pending.conn"
-```
-
-## Configuration Options
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `Type` | `string` | Generated enum type name |
-| `Name` | `string` | Base constant name |  
-| `BasicValue` | `T` | Basic value for the enum |
-| `DelimValue` | `T` | Delimiter for compound names |
-| `Options` | `[]*EnumOption[T]` | Enum option definitions |
-| `NamingMode` | `NamingModeEnum` | Naming pattern strategy |
-| `IsGenBasic` | `bool` | Generate `Basic()` method |
-| `IsGenValid` | `bool` | Generate `Valid()` method | 
-| `IsGenCheck` | `bool` | Generate `Check()` method |
-
-## Validation Functions
-
-### `goenum.Valid()`
-Checks if a value exists in the enum set:
-```go
-if goenum.Valid(status) {
-    // Value is one of the defined enum options
+// Each domain gets its own clean namespace
+func processPackage(status string) {
+    switch PackageStatusEnum(status) {
+    case PackageStatus.Pending():
+        // handle pending
+    case PackageStatus.Confirmed():
+        // handle confirmed
+    case PackageStatus.Shipped():
+        // handle shipped
+    case PackageStatus.Delivered():
+        // handle delivered
+    }
 }
 ```
 
-### `goenum.Check()`  
-Validates with basic value fallback:
 ```go
-if goenum.Check(status) {
-    // Value is either basic value or valid enum option
+func processPayment(status string) {
+    switch PaymentStatusEnum(status) {
+    case PaymentStatus.Pending():
+        // handle pending
+    case PaymentStatus.Failed():
+        // handle failed
+    case PaymentStatus.Success():
+        // handle success
+    case PaymentStatus.Refund():
+        // handle refund
+    }
 }
 ```
 
-## Project Structure
+## Multi-Language Support
 
+GOENUM supports enum generation in multiple languages:
+
+```go
+// Chinese enum usage example
+func processTask(status string) {
+    taskStatus := TaskStatusEnum(status)
+    switch taskStatus {
+    case TaskStatus.C待处理():
+        // handle pending task
+    case TaskStatus.C已确认():
+        // handle confirmed task
+    case TaskStatus.C进行中():
+        // handle active task
+    case TaskStatus.C已完成():
+        // handle completed task
+    }
+}
 ```
-goenum/
-├── goenum.go              # Main validation functions
-├── goenumgen/             # Code generation package
-│   ├── generate.go        # Generation engine
-│   └── naming_mode.go     # Naming pattern definitions
-├── internal/
-│   ├── constraint/        # Generic type constraints
-│   ├── utils/             # Utility functions
-│   └── examples/          # Usage examples
-│       ├── example1/      # Basic int enum
-│       ├── example2/      # String enum with validation
-│       ├── example3/      # Switch pattern enum
-│       └── example4/      # Complex naming patterns
-└── README.md
+
+```go
+// Traditional Chinese enum example
+func processPermission(status string) {
+    permStatus := PermissionStatusEnum(status)
+    switch permStatus {
+    case PermissionStatus.C開啟():
+        // handle enabled permission
+    case PermissionStatus.C關閉():
+        // handle disabled permission
+    }
+}
 ```
+
+```go
+// Japanese enum example
+func processConnection(status string) {
+    connStatus := ConnectionStatusEnum(status)
+    switch connStatus {
+    case ConnectionStatus.C接続():
+        // handle connected
+    case ConnectionStatus.C切断():
+        // handle disconnected
+    case ConnectionStatus.C待機():
+        // handle waiting
+    }
+}
+```
+
+```go
+// Korean enum example
+func processGame(status string) {
+    gameStatus := GameStatusEnum(status)
+    switch gameStatus {
+    case GameStatus.C시작():
+        // handle game start
+    case GameStatus.C종료():
+        // handle game end
+    case GameStatus.C일시정지():
+        // handle game pause
+    }
+}
+```
+
+---
+
+**Examples**: See [examples](internal/examples)
+
+---
 
 <!-- TEMPLATE (EN) BEGIN: STANDARD PROJECT FOOTER -->
 <!-- VERSION 2025-08-28 08:33:43.829511 +0000 UTC -->

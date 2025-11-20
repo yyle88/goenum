@@ -87,8 +87,7 @@ func processPayment(status string) {
 ```go
 // 每个领域拥有自己的清晰命名空间
 func processPackage(status string) {
-    pkgStatus := PackageStatusEnum(status)
-    switch pkgStatus {
+    switch PackageStatusEnum(status) {
     case PackageStatus.Pending():
         // 处理待处理
     case PackageStatus.Confirmed():
@@ -101,8 +100,7 @@ func processPackage(status string) {
 }
 
 func processPayment(status string) {
-    payStatus := PaymentStatusEnum(status)
-    switch payStatus {
+    switch PaymentStatusEnum(status) {
     case PaymentStatus.Pending():
         // 处理待支付
     case PaymentStatus.Failed():
@@ -123,7 +121,6 @@ func processPayment(status string) {
 ✅ **编译时安全** - 不可能混用不同领域的枚举
 
 ## 多语言支持
-
 GOENUM 支持使用多种语言生成枚举：
 
 ```go
@@ -193,27 +190,27 @@ func processGame(status string) {
 ---
 
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-08-28 08:33:43.829511 +0000 UTC -->
+<!-- VERSION 2025-11-20 04:26:32.402216 +0000 UTC -->
 
 ## 📄 许可证类型
 
-MIT 许可证。详见 [LICENSE](LICENSE)。
+MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 ---
 
-## 🤝 项目贡献
+## 💬 联系与反馈
 
 非常欢迎贡献代码！报告 BUG、建议功能、贡献代码：
 
-- 🐛 **发现问题？** 在 GitHub 上提交问题并附上重现步骤
-- 💡 **功能建议？** 创建 issue 讨论您的想法
+- 🐛 **问题报告？** 在 GitHub 上提交问题并附上重现步骤
+- 💡 **新颖思路？** 创建 issue 讨论
 - 📖 **文档疑惑？** 报告问题，帮助我们改进文档
 - 🚀 **需要功能？** 分享使用场景，帮助理解需求
 - ⚡ **性能瓶颈？** 报告慢操作，帮助我们优化性能
 - 🔧 **配置困扰？** 询问复杂设置的相关问题
 - 📢 **关注进展？** 关注仓库以获取新版本和功能
 - 🌟 **成功案例？** 分享这个包如何改善工作流程
-- 💬 **意见反馈？** 欢迎所有建议和宝贵意见
+- 💬 **反馈意见？** 欢迎提出建议和意见
 
 ---
 
@@ -231,7 +228,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 8. **暂存**：暂存更改（`git add .`）
 9. **提交**：提交更改（`git commit -m "Add feature xxx"`）确保向后兼容的代码
 10. **推送**：推送到分支（`git push origin feature/xxx`）
-11. **PR**：在 GitHub 上打开 Pull Request（在 GitHub 网页上）并提供详细描述
+11. **PR**：在 GitHub 上打开 Merge Request（在 GitHub 网页上）并提供详细描述
 
 请确保测试通过并包含相关的文档更新。
 
@@ -239,7 +236,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 
 ## 🌟 项目支持
 
-非常欢迎通过提交 Pull Request 和报告问题来为此项目做出贡献。
+非常欢迎通过提交 Merge Request 和报告问题来为此项目做出贡献。
 
 **项目支持：**
 
@@ -248,7 +245,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 - 📝 **撰写博客**关于开发工具和工作流程 - 我们提供写作支持
 - 🌟 **加入生态** - 致力于支持开源和（golang）开发场景
 
-**使用这个包快乐编程！** 🎉
+**祝你用这个包编程愉快！** 🎉🎉🎉
 
 <!-- TEMPLATE (ZH) END: STANDARD PROJECT FOOTER -->
 

@@ -190,27 +190,27 @@ func processGame(status string) {
 ---
 
 <!-- TEMPLATE (EN) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-08-28 08:33:43.829511 +0000 UTC -->
+<!-- VERSION 2025-11-20 04:26:32.402216 +0000 UTC -->
 
 ## 📄 License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License - see [LICENSE](LICENSE).
 
 ---
 
-## 🤝 Contributing
+## 💬 Contact & Feedback
 
 Contributions are welcome! Report bugs, suggest features, and contribute code:
 
-- 🐛 **Found a bug?** Open an issue on GitHub with reproduction steps
-- 💡 **Have a feature idea?** Create an issue to discuss the suggestion
+- 🐛 **Mistake reports?** Open an issue on GitHub with reproduction steps
+- 💡 **Fresh ideas?** Create an issue to discuss
 - 📖 **Documentation confusing?** Report it so we can improve
-- 🚀 **Need new features?** Share your use cases to help us understand requirements
-- ⚡ **Performance issue?** Help us optimize by reporting slow operations
+- 🚀 **Need new features?** Share the use cases to help us understand requirements
+- ⚡ **Performance issue?** Help us optimize through reporting slow operations
 - 🔧 **Configuration problem?** Ask questions about complex setups
-- 📢 **Follow project progress?** Watch the repo for new releases and features
-- 🌟 **Success stories?** Share how this package improved your workflow
-- 💬 **General feedback?** All suggestions and comments are welcome
+- 📢 **Follow project progress?** Watch the repo to get new releases and features
+- 🌟 **Success stories?** Share how this package improved the workflow
+- 💬 **Feedback?** We welcome suggestions and comments
 
 ---
 
@@ -218,17 +218,17 @@ Contributions are welcome! Report bugs, suggest features, and contribute code:
 
 New code contributions, follow this process:
 
-1. **Fork**: Fork the repo on GitHub (using the webpage interface).
+1. **Fork**: Fork the repo on GitHub (using the webpage UI).
 2. **Clone**: Clone the forked project (`git clone https://github.com/yourname/repo-name.git`).
 3. **Navigate**: Navigate to the cloned project (`cd repo-name`)
 4. **Branch**: Create a feature branch (`git checkout -b feature/xxx`).
-5. **Code**: Implement your changes with comprehensive tests
+5. **Code**: Implement the changes with comprehensive tests
 6. **Testing**: (Golang project) Ensure tests pass (`go test ./...`) and follow Go code style conventions
-7. **Documentation**: Update documentation for user-facing changes and use meaningful commit messages
+7. **Documentation**: Update documentation to support client-facing changes and use significant commit messages
 8. **Stage**: Stage changes (`git add .`)
 9. **Commit**: Commit changes (`git commit -m "Add feature xxx"`) ensuring backward compatible code
 10. **Push**: Push to the branch (`git push origin feature/xxx`).
-11. **PR**: Open a pull request on GitHub (on the GitHub webpage) with detailed description.
+11. **PR**: Open a merge request on GitHub (on the GitHub webpage) with detailed description.
 
 Please ensure tests pass and include relevant documentation updates.
 
@@ -236,7 +236,7 @@ Please ensure tests pass and include relevant documentation updates.
 
 ## 🌟 Support
 
-Welcome to contribute to this project by submitting pull requests and reporting issues.
+Welcome to contribute to this project via submitting merge requests and reporting issues.
 
 **Project Support:**
 
@@ -245,7 +245,7 @@ Welcome to contribute to this project by submitting pull requests and reporting 
 - 📝 **Write tech blogs** about development tools and workflows - we provide content writing support
 - 🌟 **Join the ecosystem** - committed to supporting open source and the (golang) development scene
 
-**Happy Coding with this package!** 🎉
+**Have Fun Coding with this package!** 🎉🎉🎉
 
 <!-- TEMPLATE (EN) END: STANDARD PROJECT FOOTER -->
 

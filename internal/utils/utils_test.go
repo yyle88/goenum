@@ -20,3 +20,9 @@ func TestWithQuotes(t *testing.T) {
 	c := utils.WithQuotes(b)
 	require.Equal(t, a, c)
 }
+
+func TestGetGenPosFuncMark(t *testing.T) {
+	result := utils.GetGenPosFuncMark(0)
+	require.NotEmpty(t, result)
+	t.Log("result:", result)
+}

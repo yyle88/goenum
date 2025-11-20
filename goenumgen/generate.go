@@ -68,6 +68,17 @@ func Generate[T comparable](config *Config[T], path string) {
 	// Create print context for code generation
 	// 创建代码生成的打印上下文
 	ptx := printgo.NewPTX()
+
+	// Add generation header comments
+	// 添加生成头部注释
+	ptx.Println("// Code generated using goenumgen. DO NOT EDIT.")
+	ptx.Println("// This file was auto generated via github.com/yyle88/goenum")
+	if genPos := utils.GetGenPosFuncMark(1); genPos != "" {
+		ptx.Println("// Generated from:", genPos)
+	}
+	ptx.Println("// ========== GOENUM:DO-NOT-EDIT-SECTION:END ==========")
+	ptx.Println()
+
 	pkgName := syntaxgo.GetPkgName(osmustexist.FILE(path))
 	ptx.Println("package", pkgName)
 	ptx.Println("import (")

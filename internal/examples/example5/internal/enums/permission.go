@@ -1,3 +1,8 @@
+// Code generated using goenumgen. DO NOT EDIT.
+// This file was auto generated via github.com/yyle88/goenum
+// Generated from: permission_test.go:11 -> enums_test.TestGeneratePermission
+// ========== GOENUM:DO-NOT-EDIT-SECTION:END ==========
+
 package enums
 
 import (

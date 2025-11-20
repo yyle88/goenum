@@ -1,3 +1,8 @@
+// Code generated using goenumgen. DO NOT EDIT.
+// This file was auto generated via github.com/yyle88/goenum
+// Generated from: naming_mode_test.go:11 -> goenumgen_test.TestGenerateAction
+// ========== GOENUM:DO-NOT-EDIT-SECTION:END ==========
+
 package goenumgen
 
 type NamingModeEnum string

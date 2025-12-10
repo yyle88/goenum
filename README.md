@@ -1,7 +1,7 @@
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yyle88/goenum/release.yml?branch=main&label=BUILD)](https://github.com/yyle88/goenum/actions/workflows/release.yml?query=branch%3Amain)
 [![GoDoc](https://pkg.go.dev/badge/github.com/yyle88/goenum)](https://pkg.go.dev/github.com/yyle88/goenum)
 [![Coverage Status](https://img.shields.io/coveralls/github/yyle88/goenum/main.svg)](https://coveralls.io/github/yyle88/goenum?branch=main)
-![Supported Go Versions](https://img.shields.io/badge/Go-1.22%2C%201.23-lightgrey.svg)
+[![Supported Go Versions](https://img.shields.io/badge/Go-1.25+-lightgrey.svg)](https://go.dev/)
 [![GitHub Release](https://img.shields.io/github/release/yyle88/goenum.svg)](https://github.com/yyle88/goenum/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/goenum)](https://goreportcard.com/report/github.com/yyle88/goenum)
 
@@ -12,6 +12,7 @@ Go enum code generation that enables different business domains to share common 
 ---
 
 <!-- TEMPLATE (EN) BEGIN: LANGUAGE NAVIGATION -->
+
 ## CHINESE README
 
 [中文说明](README.zh.md)
@@ -20,10 +21,10 @@ Go enum code generation that enables different business domains to share common 
 ## Features
 
 🔒 **Namespace Isolation** - Each domain has its own enum space, preventing naming conflicts
-⚡ **Type Validation** - Auto-generated validation methods ensure value correctness
+⚡ **Enum Collection** - Generated `Enums()` returns collection with `Lookup`, `List`, `Get` methods
 🎯 **Clean Code** - Intuitive syntax that matches business logic patterns
 ✅ **Compile Protection** - Catch enum misuse at build time, not runtime
-🌍 **Multi-Language** - Generate enums using any language characters
+🌍 **Multi-Language** - Generate enums using various language characters
 
 ## Installation
 
@@ -119,6 +120,20 @@ func processPayment(status string) {
 }
 ```
 
+### Enum Validation with Enums()
+
+Each generated enum type has an `Enums()` method returning a collection that supports validation and lookup:
+
+```go
+// Validate enum value
+if _, ok := PackageStatus.Enums().Lookup(status); !ok {
+    return errors.New("invalid package status")
+}
+
+// Get all valid enum values
+allStatuses := PackageStatus.Enums().List()
+```
+
 ## Multi-Language Support
 
 GOENUM supports enum generation in multiple languages:
@@ -189,8 +204,16 @@ func processGame(status string) {
 
 ---
 
+## Related Projects
+
+- **[enum](https://github.com/yyle88/enum)** - Go enum collection management with metadata support and map-based lookup
+- **[goenum](https://github.com/yyle88/goenum)** - Go enum code generation with namespace isolation (this package)
+- **[protoenum](https://github.com/go-xlan/protoenum)** - Protocol Buffers enum code generation with type-safe operations
+
+---
+
 <!-- TEMPLATE (EN) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-11-20 04:26:32.402216 +0000 UTC -->
+<!-- VERSION 2025-11-25 03:52:28.131064 +0000 UTC -->
 
 ## 📄 License
 
@@ -224,7 +247,7 @@ New code contributions, follow this process:
 4. **Branch**: Create a feature branch (`git checkout -b feature/xxx`).
 5. **Code**: Implement the changes with comprehensive tests
 6. **Testing**: (Golang project) Ensure tests pass (`go test ./...`) and follow Go code style conventions
-7. **Documentation**: Update documentation to support client-facing changes and use significant commit messages
+7. **Documentation**: Update documentation to support client-facing changes
 8. **Stage**: Stage changes (`git add .`)
 9. **Commit**: Commit changes (`git commit -m "Add feature xxx"`) ensuring backward compatible code
 10. **Push**: Push to the branch (`git push origin feature/xxx`).

@@ -19,8 +19,5 @@ func TestGenerateGame(t *testing.T) {
 			{Name: "P일시정지", OptionValue: "일시정지"},
 		},
 		NamingMode: goenumgen.NamingMode.Suffix(),
-		IsGenBasic: true,
-		IsGenValid: true,
-		IsGenCheck: true,
 	}, runtestpath.SrcPath(t))
 }

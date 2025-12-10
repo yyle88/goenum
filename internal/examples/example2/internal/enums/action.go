@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type ActionEnum string
@@ -25,20 +25,11 @@ func (ActionEnum) Pause() ActionEnum {
 func (ActionEnum) Reset() ActionEnum {
 	return "Action" + "-" + "Reset"
 }
-func (ActionEnum) Basic() ActionEnum {
-	return Action
-}
-func (ActionEnum) Enums() []ActionEnum {
-	return []ActionEnum{
-		Action.Start(),
-		Action.Close(),
-		Action.Pause(),
-		Action.Reset(),
-	}
-}
-func (value ActionEnum) Valid() bool {
-	return slices.Contains(Action.Enums(), value)
-}
-func (value ActionEnum) Check() bool {
-	return value == Action || slices.Contains(Action.Enums(), value)
+func (ActionEnum) Enums() *goenum.Enums[ActionEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Action.Start()),
+		goenum.NewEnum(Action.Close()),
+		goenum.NewEnum(Action.Pause()),
+		goenum.NewEnum(Action.Reset()),
+	)
 }

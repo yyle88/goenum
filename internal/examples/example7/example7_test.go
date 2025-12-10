@@ -22,7 +22,7 @@ func processGame(input string) string {
 	gameValue := enums.GameEnum(input)
 
 	// Step 2: Validate enum // 2단계: 열거형 검증
-	if !gameValue.Valid() {
+	if _, ok := enums.Game.Enums().Lookup(gameValue); !ok {
 		return fmt.Sprintf("ERROR: INVALID GAME STATE '%s'", input)
 	}
 

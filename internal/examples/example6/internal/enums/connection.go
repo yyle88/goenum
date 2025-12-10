@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type ConnectionEnum string
@@ -22,19 +22,10 @@ func (ConnectionEnum) D切断() ConnectionEnum {
 func (ConnectionEnum) W待機() ConnectionEnum {
 	return "接続" + "" + "待機"
 }
-func (ConnectionEnum) Basic() ConnectionEnum {
-	return Connection
-}
-func (ConnectionEnum) Enums() []ConnectionEnum {
-	return []ConnectionEnum{
-		Connection.C接続(),
-		Connection.D切断(),
-		Connection.W待機(),
-	}
-}
-func (value ConnectionEnum) Valid() bool {
-	return slices.Contains(Connection.Enums(), value)
-}
-func (value ConnectionEnum) Check() bool {
-	return value == Connection || slices.Contains(Connection.Enums(), value)
+func (ConnectionEnum) Enums() *goenum.Enums[ConnectionEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Connection.C接続()),
+		goenum.NewEnum(Connection.D切断()),
+		goenum.NewEnum(Connection.W待機()),
+	)
 }

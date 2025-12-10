@@ -21,7 +21,7 @@ func processPermission(input string) string {
 	permissionValue := enums.PermissionEnum(input)
 
 	// Step 2: Validate enum // 第二步：驗證枚舉合法性
-	if !permissionValue.Valid() {
+	if _, ok := enums.Permission.Enums().Lookup(permissionValue); !ok {
 		return fmt.Sprintf("ERROR: INVALID PERMISSION STATE '%s'", input)
 	}
 

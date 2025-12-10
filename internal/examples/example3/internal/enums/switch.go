@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type SwitchEnum string
@@ -19,18 +19,9 @@ func (SwitchEnum) On() SwitchEnum {
 func (SwitchEnum) Off() SwitchEnum {
 	return "关闭"
 }
-func (SwitchEnum) Basic() SwitchEnum {
-	return Switch
-}
-func (SwitchEnum) Enums() []SwitchEnum {
-	return []SwitchEnum{
-		Switch.On(),
-		Switch.Off(),
-	}
-}
-func (value SwitchEnum) Valid() bool {
-	return slices.Contains(Switch.Enums(), value)
-}
-func (value SwitchEnum) Check() bool {
-	return value == Switch || slices.Contains(Switch.Enums(), value)
+func (SwitchEnum) Enums() *goenum.Enums[SwitchEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Switch.On()),
+		goenum.NewEnum(Switch.Off()),
+	)
 }

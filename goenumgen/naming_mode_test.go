@@ -32,8 +32,5 @@ func TestGenerateAction(t *testing.T) {
 			},
 		},
 		NamingMode: goenumgen.NamingMode.Suffix(),
-		IsGenBasic: false,
-		IsGenValid: false,
-		IsGenCheck: false,
 	}, runtestpath.SrcPath(t))
 }

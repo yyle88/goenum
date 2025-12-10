@@ -21,7 +21,7 @@ func processStatus(input string) string {
 	statusValue := enums.StatusEnum(input)
 
 	// Step 2: Validate enum // 第二步：验证枚举合法性
-	if !statusValue.Valid() {
+	if _, ok := enums.Status.Enums().Lookup(statusValue); !ok {
 		return fmt.Sprintf("ERROR: INVALID STATUS '%s'", input)
 	}
 

@@ -24,8 +24,5 @@ func TestGenerateStatus(t *testing.T) {
 			},
 		},
 		NamingMode: goenumgen.NamingMode.Single(),
-		IsGenBasic: false,
-		IsGenValid: false,
-		IsGenCheck: false,
 	}, runtestpath.SrcPath(t))
 }

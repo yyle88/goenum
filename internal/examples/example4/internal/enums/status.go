@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type StatusEnum string
@@ -22,19 +22,10 @@ func (StatusEnum) F失败() StatusEnum {
 func (StatusEnum) P等待() StatusEnum {
 	return "状态" + "-" + "等待"
 }
-func (StatusEnum) Basic() StatusEnum {
-	return Status
-}
-func (StatusEnum) Enums() []StatusEnum {
-	return []StatusEnum{
-		Status.S成功(),
-		Status.F失败(),
-		Status.P等待(),
-	}
-}
-func (value StatusEnum) Valid() bool {
-	return slices.Contains(Status.Enums(), value)
-}
-func (value StatusEnum) Check() bool {
-	return value == Status || slices.Contains(Status.Enums(), value)
+func (StatusEnum) Enums() *goenum.Enums[StatusEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Status.S成功()),
+		goenum.NewEnum(Status.F失败()),
+		goenum.NewEnum(Status.P等待()),
+	)
 }

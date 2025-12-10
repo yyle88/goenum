@@ -19,8 +19,5 @@ func TestGenerateConnection(t *testing.T) {
 			{Name: "W待機", OptionValue: "待機"},
 		},
 		NamingMode: goenumgen.NamingMode.Suffix(),
-		IsGenBasic: true,
-		IsGenValid: true,
-		IsGenCheck: true,
 	}, runtestpath.SrcPath(t))
 }

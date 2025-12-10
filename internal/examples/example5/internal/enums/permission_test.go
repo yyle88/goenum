@@ -18,8 +18,5 @@ func TestGeneratePermission(t *testing.T) {
 			{Name: "D關閉", OptionValue: "關閉"},
 		},
 		NamingMode: goenumgen.NamingMode.Suffix(),
-		IsGenBasic: true,
-		IsGenValid: true,
-		IsGenCheck: true,
 	}, runtestpath.SrcPath(t))
 }

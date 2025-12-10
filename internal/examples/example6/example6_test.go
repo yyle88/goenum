@@ -22,7 +22,7 @@ func processConnection(input string) string {
 	connectionValue := enums.ConnectionEnum(input)
 
 	// Step 2: Validate enum // ステップ2：列挙型の検証
-	if !connectionValue.Valid() {
+	if _, ok := enums.Connection.Enums().Lookup(connectionValue); !ok {
 		return fmt.Sprintf("ERROR: INVALID CONNECTION STATE '%s'", input)
 	}
 

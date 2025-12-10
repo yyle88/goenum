@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type GameEnum string
@@ -22,19 +22,10 @@ func (GameEnum) E종료() GameEnum {
 func (GameEnum) P일시정지() GameEnum {
 	return "게임" + "-" + "일시정지"
 }
-func (GameEnum) Basic() GameEnum {
-	return Game
-}
-func (GameEnum) Enums() []GameEnum {
-	return []GameEnum{
-		Game.S시작(),
-		Game.E종료(),
-		Game.P일시정지(),
-	}
-}
-func (value GameEnum) Valid() bool {
-	return slices.Contains(Game.Enums(), value)
-}
-func (value GameEnum) Check() bool {
-	return value == Game || slices.Contains(Game.Enums(), value)
+func (GameEnum) Enums() *goenum.Enums[GameEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Game.S시작()),
+		goenum.NewEnum(Game.E종료()),
+		goenum.NewEnum(Game.P일시정지()),
+	)
 }

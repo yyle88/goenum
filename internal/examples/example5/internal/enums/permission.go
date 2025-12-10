@@ -6,7 +6,7 @@
 package enums
 
 import (
-	"slices"
+	"github.com/yyle88/goenum"
 )
 
 type PermissionEnum string
@@ -19,18 +19,9 @@ func (PermissionEnum) E開啟() PermissionEnum {
 func (PermissionEnum) D關閉() PermissionEnum {
 	return "權限" + "-" + "關閉"
 }
-func (PermissionEnum) Basic() PermissionEnum {
-	return Permission
-}
-func (PermissionEnum) Enums() []PermissionEnum {
-	return []PermissionEnum{
-		Permission.E開啟(),
-		Permission.D關閉(),
-	}
-}
-func (value PermissionEnum) Valid() bool {
-	return slices.Contains(Permission.Enums(), value)
-}
-func (value PermissionEnum) Check() bool {
-	return value == Permission || slices.Contains(Permission.Enums(), value)
+func (PermissionEnum) Enums() *goenum.Enums[PermissionEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Permission.E開啟()),
+		goenum.NewEnum(Permission.D關閉()),
+	)
 }

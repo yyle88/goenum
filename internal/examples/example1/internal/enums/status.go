@@ -5,6 +5,10 @@
 
 package enums
 
+import (
+	"github.com/yyle88/goenum"
+)
+
 type StatusEnum int
 
 const Status = StatusEnum(0)
@@ -15,9 +19,9 @@ func (StatusEnum) OK() StatusEnum {
 func (StatusEnum) WA() StatusEnum {
 	return 400
 }
-func (StatusEnum) Enums() []StatusEnum {
-	return []StatusEnum{
-		Status.OK(),
-		Status.WA(),
-	}
+func (StatusEnum) Enums() *goenum.Enums[StatusEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(Status.OK()),
+		goenum.NewEnum(Status.WA()),
+	)
 }

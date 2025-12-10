@@ -5,6 +5,10 @@
 
 package goenumgen
 
+import (
+	"github.com/yyle88/goenum"
+)
+
 type NamingModeEnum string
 
 const NamingMode = NamingModeEnum("Naming")
@@ -21,11 +25,11 @@ func (NamingModeEnum) Middle() NamingModeEnum {
 func (NamingModeEnum) Single() NamingModeEnum {
 	return "Naming" + "-" + "Single"
 }
-func (NamingModeEnum) Enums() []NamingModeEnum {
-	return []NamingModeEnum{
-		NamingMode.Prefix(),
-		NamingMode.Suffix(),
-		NamingMode.Middle(),
-		NamingMode.Single(),
-	}
+func (NamingModeEnum) Enums() *goenum.Enums[NamingModeEnum] {
+	return goenum.NewEnums(
+		goenum.NewEnum(NamingMode.Prefix()),
+		goenum.NewEnum(NamingMode.Suffix()),
+		goenum.NewEnum(NamingMode.Middle()),
+		goenum.NewEnum(NamingMode.Single()),
+	)
 }

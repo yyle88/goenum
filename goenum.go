@@ -1,41 +1,44 @@
-// Package goenum: Go enumeration validation and type checking utilities
-// Auto generates enum validation functions with type safety guarantees
-// Supports generic enum types and provides compile-time enum verification
-// Enables efficient enum validation with zero runtime allocations
+// Package goenum: Go enumeration code generation and type safe enum utilities
+// Auto generates enum types with compile-time type safety guarantees
+// Integrates with github.com/yyle88/enum package for collection management
+// Enables efficient enum validation with map-based lookup
 //
-// goenum: Go 枚举验证和类型检查工具包
-// 自动生成具有类型安全保证的枚举验证函数
-// 支持泛型枚举类型，提供编译时枚举验证
-// 实现零运行时分配的高效枚举验证
+// goenum: Go 枚举代码生成和类型安全枚举工具包
+// 自动生成具有编译时类型安全保证的枚举类型
+// 与 github.com/yyle88/enum 包集成进行集合管理
+// 实现基于 map 查找的高效枚举验证
 package goenum
 
-import "github.com/yyle88/goenum/internal/constraint"
+import "github.com/yyle88/enum"
 
-// Valid checks if the given enum value exists in the enum set
-// Uses compile-time type safety with generic constraints
-// Returns true if value is found in the enum collection
+// Enum is a type alias for enum.Enum with MetaNone metadata
+// Simplifies the generic signature from two type params to one
 //
-// Valid 检查给定的枚举值是否存在于枚举集合中
-// 使用泛型约束实现编译时类型安全
-// 如果值在枚举集合中找到则返回 true
-func Valid[E constraint.EnumType[E]](value E) bool {
-	// Iterate through all enum values to find match
-	// 遍历所有枚举值以查找匹配项
-	for _, elem := range value.Enums() {
-		if elem == value {
-			return true
-		}
-	}
-	return false
+// Enum 是 enum.Enum 的类型别名，使用 MetaNone 元数据
+// 将泛型签名从两个类型参数简化为一个
+type Enum[enumCode comparable] = enum.Enum[enumCode, *enum.MetaNone]
+
+// NewEnum creates a new Enum instance with Go native enum
+// Wraps enum.NewEnum for convenience
+//
+// 创建新的 Enum 实例，绑定 Go 原生枚举
+// 封装 enum.NewEnum 以便使用
+func NewEnum[C comparable](code C) *Enum[C] {
+	return enum.NewEnum(code)
 }
 
-// Check validates enum value with basic value fallback support
-// Accepts both basic enum values and valid enum options
-// Combines basic value check with comprehensive enum validation
+// Enums is a type alias for enum.Enums with MetaNone metadata
+// Simplifies the generic signature from two type params to one
 //
-// Check 验证枚举值，支持基本值回退
-// 接受基本枚举值和有效的枚举选项
-// 结合基本值检查和全面的枚举验证
-func Check[E constraint.EnumItem[E]](value E) bool {
-	return value == value.Basic() || Valid(value)
+// Enums 是 enum.Enums 的类型别名，使用 MetaNone 元数据
+// 将泛型签名从两个类型参数简化为一个
+type Enums[enumCode comparable] = enum.Enums[enumCode, *enum.MetaNone]
+
+// NewEnums creates a new Enums collection from the given Enum instances
+// Wraps enum.NewEnums for convenience
+//
+// 从给定的 Enum 实例创建新的 Enums 集合
+// 封装 enum.NewEnums 以便使用
+func NewEnums[C comparable](params ...*Enum[C]) *Enums[C] {
+	return enum.NewEnums(params...)
 }

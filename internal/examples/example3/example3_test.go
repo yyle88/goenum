@@ -21,7 +21,7 @@ func processSwitch(input string) string {
 	switchValue := enums.SwitchEnum(input)
 
 	// Step 2: Validate enum // 第二步：验证枚举合法性
-	if !switchValue.Valid() {
+	if _, ok := enums.Switch.Enums().Lookup(switchValue); !ok {
 		return fmt.Sprintf("ERROR: INVALID SWITCH STATE '%s'", input)
 	}
 

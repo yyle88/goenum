@@ -1,7 +1,7 @@
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yyle88/goenum/release.yml?branch=main&label=BUILD)](https://github.com/yyle88/goenum/actions/workflows/release.yml?query=branch%3Amain)
 [![GoDoc](https://pkg.go.dev/badge/github.com/yyle88/goenum)](https://pkg.go.dev/github.com/yyle88/goenum)
 [![Coverage Status](https://img.shields.io/coveralls/github/yyle88/goenum/main.svg)](https://coveralls.io/github/yyle88/goenum?branch=main)
-![Supported Go Versions](https://img.shields.io/badge/Go-1.22%2C%201.23-lightgrey.svg)
+[![Supported Go Versions](https://img.shields.io/badge/Go-1.25+-lightgrey.svg)](https://go.dev/)
 [![GitHub Release](https://img.shields.io/github/release/yyle88/goenum.svg)](https://github.com/yyle88/goenum/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/goenum)](https://goreportcard.com/report/github.com/yyle88/goenum)
 
@@ -12,6 +12,7 @@ Go 枚举代码生成工具，让不同业务领域可以共享 OK、ERROR、PEN
 ---
 
 <!-- TEMPLATE (ZH) BEGIN: LANGUAGE NAVIGATION -->
+
 ## 英文文档
 
 [ENGLISH README](README.md)
@@ -20,10 +21,10 @@ Go 枚举代码生成工具，让不同业务领域可以共享 OK、ERROR、PEN
 ## 功能特性
 
 🔒 **命名空间隔离** - 每个领域拥有独立的枚举空间，避免命名冲突
-⚡ **类型验证** - 自动生成验证方法确保值的正确性
+⚡ **枚举集合** - 生成的 `Enums()` 返回集合，支持 `Lookup`、`List`、`Get` 等方法
 🎯 **简洁代码** - 直观语法匹配业务逻辑模式
 ✅ **编译保护** - 在构建时捕获枚举误用，而非运行时
-🌍 **多种语言** - 支持使用任何语言字符生成枚举
+🌍 **多种语言** - 支持使用多种语言字符生成枚举
 
 ## 安装
 
@@ -113,10 +114,24 @@ func processPayment(status string) {
 }
 ```
 
+### 使用 Enums() 验证枚举
+
+每个生成的枚举类型都有 `Enums()` 方法，返回集合用于验证和查找：
+
+```go
+// 验证枚举值
+if _, ok := PackageStatus.Enums().Lookup(status); !ok {
+    return errors.New("无效的包裹状态")
+}
+
+// 获取所有有效枚举值
+allStatuses := PackageStatus.Enums().List()
+```
+
 ## 核心优势
 
 🔒 **真正隔离** - `PackageStatus.Pending()` 和 `PaymentStatus.Pending()` 是完全不同的类型
-⚡ **内置验证** - 生成的 `.Valid()` 方法捕获无效值
+⚡ **集合查询** - 通过 `Enums().Lookup()` 验证枚举值是否有效
 🎯 **业务清晰** - 代码读起来像自然的业务语言
 ✅ **编译时安全** - 不可能混用不同领域的枚举
 
@@ -189,8 +204,16 @@ func processGame(status string) {
 
 ---
 
+## 关联项目
+
+- **[enum](https://github.com/yyle88/enum)** - Go 枚举集合管理，支持元数据和基于 map 的查找
+- **[goenum](https://github.com/yyle88/goenum)** - Go 枚举代码生成，支持命名空间隔离（本项目）
+- **[protoenum](https://github.com/go-xlan/protoenum)** - Protocol Buffers 枚举代码生成，支持类型安全操作
+
+---
+
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-11-20 04:26:32.402216 +0000 UTC -->
+<!-- VERSION 2025-11-25 03:52:28.131064 +0000 UTC -->
 
 ## 📄 许可证类型
 
@@ -204,9 +227,9 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 - 🐛 **问题报告？** 在 GitHub 上提交问题并附上重现步骤
 - 💡 **新颖思路？** 创建 issue 讨论
-- 📖 **文档疑惑？** 报告问题，帮助我们改进文档
+- 📖 **文档疑惑？** 报告问题，帮助我们完善文档
 - 🚀 **需要功能？** 分享使用场景，帮助理解需求
-- ⚡ **性能瓶颈？** 报告慢操作，帮助我们优化性能
+- ⚡ **性能瓶颈？** 报告慢操作，协助解决性能问题
 - 🔧 **配置困扰？** 询问复杂设置的相关问题
 - 📢 **关注进展？** 关注仓库以获取新版本和功能
 - 🌟 **成功案例？** 分享这个包如何改善工作流程
@@ -224,7 +247,7 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 4. **分支**：创建功能分支（`git checkout -b feature/xxx`）
 5. **编码**：实现您的更改并编写全面的测试
 6. **测试**：（Golang 项目）确保测试通过（`go test ./...`）并遵循 Go 代码风格约定
-7. **文档**：为面向用户的更改更新文档，并使用有意义的提交消息
+7. **文档**：面向用户的更改需要更新文档
 8. **暂存**：暂存更改（`git add .`）
 9. **提交**：提交更改（`git commit -m "Add feature xxx"`）确保向后兼容的代码
 10. **推送**：推送到分支（`git push origin feature/xxx`）
@@ -236,7 +259,7 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 ## 🌟 项目支持
 
-非常欢迎通过提交 Merge Request 和报告问题来为此项目做出贡献。
+非常欢迎通过提交 Merge Request 和报告问题来贡献此项目。
 
 **项目支持：**
 

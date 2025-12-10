@@ -1,11 +1,9 @@
 package goenum_test
 
 import (
-	"slices"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/yyle88/goenum"
 	"github.com/yyle88/goenum/goenumgen"
 )
 
@@ -15,9 +13,15 @@ func TestEnums(t *testing.T) {
 	t.Log(goenumgen.NamingMode.Suffix())
 	t.Log(goenumgen.NamingMode.Enums())
 
-	require.True(t, slices.Contains(goenumgen.NamingMode.Enums(), goenumgen.NamingMode.Middle()))
-	require.True(t, slices.Contains(goenumgen.NamingMode.Enums(), goenumgen.NamingMode.Single()))
+	_, ok := goenumgen.NamingMode.Enums().Lookup(goenumgen.NamingMode.Middle())
+	require.True(t, ok)
 
-	require.True(t, goenum.Valid(goenumgen.NamingMode.Suffix()))
-	require.True(t, goenum.Valid(goenumgen.NamingMode.Single()))
+	_, ok = goenumgen.NamingMode.Enums().Lookup(goenumgen.NamingMode.Single())
+	require.True(t, ok)
+
+	_, ok = goenumgen.NamingMode.Enums().Lookup(goenumgen.NamingMode.Suffix())
+	require.True(t, ok)
+
+	codes := goenumgen.NamingMode.Enums().List()
+	require.Len(t, codes, 4)
 }

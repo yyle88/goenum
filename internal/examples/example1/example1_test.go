@@ -1,11 +1,9 @@
 package example1_test
 
 import (
-	"slices"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/yyle88/goenum"
 	"github.com/yyle88/goenum/internal/examples/example1/internal/enums"
 )
 
@@ -15,9 +13,18 @@ func TestEnums(t *testing.T) {
 	t.Log(enums.Status.WA())
 	t.Log(enums.Status.Enums())
 
-	require.True(t, slices.Contains(enums.Status.Enums(), enums.Status.OK()))
-	require.True(t, slices.Contains(enums.Status.Enums(), enums.Status.WA()))
+	// Use enum.Enums methods for lookup and validation
+	// 使用 enum.Enums 方法进行查找和验证
+	_, ok := enums.Status.Enums().Lookup(enums.Status.OK())
+	require.True(t, ok)
 
-	require.True(t, goenum.Valid(enums.Status.OK()))
-	require.True(t, goenum.Valid(enums.Status.WA()))
+	_, ok = enums.Status.Enums().Lookup(enums.Status.WA())
+	require.True(t, ok)
+
+	// List all enum values
+	// 列出所有枚举值
+	codes := enums.Status.Enums().List()
+	require.Len(t, codes, 2)
+	require.Contains(t, codes, enums.Status.OK())
+	require.Contains(t, codes, enums.Status.WA())
 }
